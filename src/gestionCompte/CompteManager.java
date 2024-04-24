@@ -7,8 +7,9 @@ import java.util.Map;
 import java.io.*;
 
 public class CompteManager extends UnicastRemoteObject implements ICompte {
+    private static final long serialVersionUID = 1L;
     private Map<String, Compte> comptes = new HashMap<>();
-    private static final String FILE_PATH = "resources/comptes.ser"; // Chemin mis à jour
+    private static final String FILE_PATH = "resources/comptes.txt"; // Chemin mis à jour
 
     public CompteManager() throws RemoteException {
         super();
@@ -42,22 +43,31 @@ public class CompteManager extends UnicastRemoteObject implements ICompte {
         return compte != null && compte.getMdp().equals(mdp);
     }
 
-    // Méthode pour sauvegarder les comptes dans un fichier
+    // Méthode pour sauvegarder les comptes dans un fichier de texte
     private void saveComptes() {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
-            out.writeObject(comptes);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Map.Entry<String, Compte> entry : comptes.entrySet()) {
+                writer.write(entry.getKey() + "," + entry.getValue().getMdp());
+                writer.newLine();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Méthode pour charger les comptes à partir d'un fichier
+    // Méthode pour charger les comptes à partir d'un fichier de texte
     private void loadComptes() {
         File file = new File(FILE_PATH);
         if (file.exists()) {
-            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
-                comptes = (Map<String, Compte>) in.readObject();
-            } catch (IOException | ClassNotFoundException e) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length >= 2) {
+                        comptes.put(parts[0], new Compte(parts[0], parts[1]));
+                    }
+                }
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

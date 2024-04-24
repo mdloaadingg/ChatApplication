@@ -23,7 +23,7 @@ public interface ICompte extends Remote {
      * @return <code>true</code> si la suppression est effective (couple
      * pseudo/mdp valide), <code>false</code> sinon
      */ 
-    boolean supprimerCompter(String pseudo, String mdp) throws RemoteException;
+    boolean supprimerCompte(String pseudo, String mdp) throws RemoteException;
     
     /**
      * Validation de la connexion d'un utilisateur au système.

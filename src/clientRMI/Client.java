@@ -5,10 +5,10 @@ import java.rmi.registry.Registry;
 
 import gestionCompte.ICompte;
 
-public class ClientRMI implements ClientInterface {
+public class Client implements ClientInterface {
     private ICompte compteManager;
 
-    public ClientRMI(String host, int port) {
+    public Client(String host, int port) {
         try {
             Registry registry = LocateRegistry.getRegistry(host, port);
             compteManager = (ICompte) registry.lookup("CompteManager");
