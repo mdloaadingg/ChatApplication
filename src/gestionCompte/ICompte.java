@@ -1,4 +1,4 @@
-package Gestioncompte;
+package gestionCompte;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

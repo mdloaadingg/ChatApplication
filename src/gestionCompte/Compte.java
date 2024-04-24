@@ -1,4 +1,4 @@
-package Gestioncompte;
+package gestionCompte;
 
 import java.io.Serializable;
 

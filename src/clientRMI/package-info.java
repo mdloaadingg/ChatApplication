@@ -4,4 +4,4 @@
 /**
  * 
  */
-package ClientRMI;
+package clientRMI;

@@ -1,4 +1,4 @@
-package Gestioncompte;
+package gestionCompte;
 
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
